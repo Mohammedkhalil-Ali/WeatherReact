@@ -1,10 +1,8 @@
-import { logDOM } from '@testing-library/react';
 import React, { useEffect, useState } from 'react'
 import { useSelector,useDispatch } from 'react-redux'
 import { fetchWeather } from '../app/modules/weather'
 
 import './home.css'
-const axios = require('axios');
 export default function Home() {
   const state=useSelector((state)=>state)
   let [cityName , setName]=useState('london')
@@ -30,11 +28,10 @@ export default function Home() {
 
   const Search=()=>{
     dispatch(fetchWeather(cityName))
-    console.log(weather);
   }
-   {/* <input type="text" onChange={(e)=>{setName(e.target.value)}}/>
-        <button onClick={Search}>Search</button>
-        <div>{weather?.weather?.data?.location?.name}</div> */}
+
+        if(error){return (<div>Error</div>)}
+        if(loading==true){return (<div>Loading</div>)}
   return (
     <div className='w-screen md:w-full h-full overflow-x-hidden'>
       <div className="header w-screen z-50  h-[50vh] md:h-[35vh] stylem flex justify-center md:block">
@@ -49,47 +46,47 @@ export default function Home() {
           </div>
           <div className='md:mr-16 z-50'>
           <div className="name text-sm md:text-2xl mt-4 text-white font-thin">{weather?.weather?.data?.current?.condition?.text}</div>
-          <div className="mt-5 md:mt-0 z-50"><img src={weather?.weather?.data?.current?.condition?.icon} alt="" srcset="" className='h-24 w-20 md:h-24 md:w-28 m-auto z-50'/></div>
+          <div className="mt-5 md:mt-0 z-50"><img src={weather?.weather?.data?.current?.condition?.icon} alt="" className='h-24 w-20 md:h-24 md:w-28 m-auto z-50'/></div>
           </div>
         </div>
       </div>
       <div className="header w-screen md:w-full -mt-1 z-10">
-        <img src={require('../assets/attachment2.png')} alt="" srcset="" className='h-[15vh] md:h-[35vh] w-screen md:w-full'/>
+        <img src={require('../assets/attachment2.png')} alt=""  className='h-[15vh] md:h-[35vh] w-screen md:w-full'/>
       </div>
       <div className="header w-screen md:w-full  h-[30vh] md:h-[65vh] bg-white">
         <div className="searchBtn flex justify-center">
           <input type="text" className='bg-[rgb(125,188,245)] shadow-sm rounded-full p-2 placeholder:text-white placeholder:opacity-50 focus:border-0 focus:outline-none text-white' placeholder='Search ...' 
            onChange={(e)=>{setName(e.target.value)}}/> 
-           <button className='bg-[rgb(34,129,220)] rounded-full ml-2 w-28 text-white flex justify-center items-center'> <p className='opacity-90'>Search</p><i class="fa-solid fa-magnifying-glass-location text-white ml-2 opacity-90"></i></button>
+           <button className='bg-[rgb(34,129,220)] rounded-full ml-2 w-28 text-white flex justify-center items-center' onClick={Search}> <p className='opacity-90'>Search</p><i className="fa-solid fa-magnifying-glass-location text-white ml-2 opacity-90"></i></button>
         </div>
         <div className='Datakan grid grid-cols-3 w-[98%] mx-[1%] gap-2 mt-4'>
           <div className="yakam w-full md:flex md:justify-evenly md:items-center shadow-sm  h-20 md:h-40 rounded-md  mt-1">
-          <div className=' flex justify-center'><img src={require('../assets/wind.png')} alt="" srcset="" className='w-10 h-10 mt-1 md:w-20 md:h-16'/></div>
+          <div className=' flex justify-center'><img src={require('../assets/wind.png')} alt=""  className='w-10 h-10 mt-1 md:w-20 md:h-16'/></div>
           <p className='text-[rgb(125,188,245)] mt-2 text-sm md:text-3xl'>Wind : {Math.ceil(weather?.weather?.data?.current?.wind_mph)} mph</p>
           </div>
           
           <div className="yakam w-full md:flex md:justify-evenly md:items-center shadow-sm  h-20 md:h-40 rounded-md mt-1">
-          <div className=' flex justify-center'><img src={require('../assets/wind-direction.png')} alt="" srcset="" className='w-10 h-10 mt-1 md:w-20 md:h-16'/></div>
+          <div className=' flex justify-center'><img src={require('../assets/wind-direction.png')} alt=""  className='w-10 h-10 mt-1 md:w-20 md:h-16'/></div>
           <p className='text-[rgb(125,188,245)] mt-2 text-sm md:text-3xl'>Direction: {weather?.weather?.data?.current?.wind_dir} </p>
           </div>
 
           <div className="yakam w-full md:flex md:justify-evenly md:items-center shadow-sm  h-20 md:h-40 rounded-md mt-1">
-          <div className=' flex justify-center'><img src={require('../assets/precipitation.png')} alt="" srcset="" className='w-10 h-10 mt-1 md:w-20 md:h-16'/></div>
+          <div className=' flex justify-center'><img src={require('../assets/precipitation.png')} alt=""  className='w-10 h-10 mt-1 md:w-20 md:h-16'/></div>
           <p className='text-[rgb(125,188,245)] mt-1 md:text-3xl'>Precip : {Math.ceil(weather?.weather?.data?.current?.precip_mm)} mm</p>
           </div>
 
           <div className="yakam w-full md:flex md:justify-evenly md:items-center shadow-sm  h-20 md:h-40 rounded-md mt-1">
-          <div className=' flex justify-center'><img src={require('../assets/pressure-gauge.png')} alt="" srcset="" className='w-10 h-10 mt-1 md:w-20 md:h-16'/></div>
+          <div className=' flex justify-center'><img src={require('../assets/pressure-gauge.png')} alt=""  className='w-10 h-10 mt-1 md:w-20 md:h-16'/></div>
           <p className='text-[rgb(125,188,245)] mt-1 md:text-3xl'>Pressure : {Math.ceil(weather?.weather?.data?.current?.pressure_in)} in</p>
           </div>
 
           <div className="yakam w-full md:flex md:justify-evenly md:items-center shadow-sm  h-20 md:h-40 rounded-md mt-1">
-          <div className=' flex justify-center'><img src={require('../assets/tornado.png')} alt="" srcset="" className='w-10 h-10 mt-1 md:w-20 md:h-16'/></div>
+          <div className=' flex justify-center'><img src={require('../assets/tornado.png')} alt=""  className='w-10 h-10 mt-1 md:w-20 md:h-16'/></div>
           <p className='text-[rgb(125,188,245)] mt-1 md:text-3xl'>Gust : {Math.ceil(weather?.weather?.data?.current?.gust_mph)} mph</p>
           </div>
 
           <div className="yakam w-full md:flex md:justify-evenly md:items-center shadow-sm  h-20 md:h-40 rounded-md mt-1">
-          <div className=' flex justify-center'><img src={require('../assets/celsius.png')} alt="" srcset="" className='w-10 h-10 mt-1 md:w-20 md:h-16'/></div>
+          <div className=' flex justify-center'><img src={require('../assets/celsius.png')} alt=""  className='w-10 h-10 mt-1 md:w-20 md:h-16'/></div>
           <p className='text-[rgb(125,188,245)] mt-1 md:text-3xl'>Vis : {Math.ceil(weather?.weather?.data?.current?.vis_miles)} miles</p>
           </div>
         </div>
