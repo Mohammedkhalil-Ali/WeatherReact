@@ -26,7 +26,7 @@ export default function Home() {
   //   });
   // }
 
-  //lhgy
+  //l
 
   const Search=()=>{
     dispatch(fetchWeather(cityName))
